@@ -1,0 +1,1 @@
+http://localhost:8080/find-available-flights/interconnections?departure=DUB&arrival=WRO&departureDateTime=2016-03-01T07:00&arrivalDateTime=2016-03-03T21:00
