@@ -1,4 +1,4 @@
-package com.ryanair.task.interconnectingflights.dtos;
+package com.ryanair.task.interconnectingflights.services.dtos;
 
 import lombok.Builder;
 import lombok.Data;

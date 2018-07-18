@@ -1,36 +1,27 @@
 package com.ryanair.task.interconnectingflights.controller;
 
-import com.ryanair.task.interconnectingflights.models.FlightLegModel;
+import com.ryanair.task.interconnectingflights.models.FlightFilterModel;
 import com.ryanair.task.interconnectingflights.models.FoundFlightsModel;
+import com.ryanair.task.interconnectingflights.services.InterconnectingFlightsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
 public class AvailableFlightsController implements AvailableFlightsApi {
-    @Override
-    public ResponseEntity<List<FoundFlightsModel>> loginUser(
-            @RequestParam("departure") String departure,
-            @RequestParam("arrival") String arrival,
-            @RequestParam("departureDateTime") String departureDateTime,
-            @RequestParam("arrivalDateTime") String arrivalDateTime) {
-        return ResponseEntity.ok(getMock());
+
+    private final InterconnectingFlightsServiceImpl flightsService;
+
+    @Autowired
+    public AvailableFlightsController(InterconnectingFlightsServiceImpl flightsService) {
+        this.flightsService = flightsService;
     }
 
-    public List<FoundFlightsModel> getMock() {
-        FoundFlightsModel build = FoundFlightsModel.builder()
-                .stops(0)
-                .legs(Collections.singletonList(FlightLegModel.builder()
-                        .arrivalAirport("WAS")
-                        .departureAirport("WRO")
-                        .arrivalDateTime(LocalDateTime.now())
-                        .departureDateTime(LocalDateTime.now())
-                        .build()))
-                .build();
-        return Collections.singletonList(build);
+    @Override
+    public ResponseEntity<List<FoundFlightsModel>> loginUser(@ModelAttribute final FlightFilterModel flightFilterModel) {
+        return ResponseEntity.ok(flightsService.getAppropriateFlights(flightFilterModel));
     }
 }

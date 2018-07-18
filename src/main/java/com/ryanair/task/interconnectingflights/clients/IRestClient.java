@@ -1,7 +1,7 @@
 package com.ryanair.task.interconnectingflights.clients;
 
-import com.ryanair.task.interconnectingflights.dtos.AvailableRoutsDto;
-import com.ryanair.task.interconnectingflights.dtos.AvailableSchedulesDto;
+import com.ryanair.task.interconnectingflights.services.dtos.AvailableRoutsDto;
+import com.ryanair.task.interconnectingflights.services.dtos.AvailableSchedulesDto;
 
 import java.util.List;
 
