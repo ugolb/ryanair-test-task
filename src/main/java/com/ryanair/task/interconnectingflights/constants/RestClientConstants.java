@@ -1,7 +1,7 @@
 package com.ryanair.task.interconnectingflights.constants;
 
 /**
- * RestClientConstants class contains all useful constant variables for rest client.
+ * RestClientConstants class contains all useful constant variables for rest clients.
  */
 public final class RestClientConstants {
 

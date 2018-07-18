@@ -1,8 +1,8 @@
-package com.ryanair.task.interconnectingflights.client;
+package com.ryanair.task.interconnectingflights.clients;
 
 import com.ryanair.task.interconnectingflights.constants.RestClientConstants;
-import com.ryanair.task.interconnectingflights.dto.AvailableRoutsDto;
-import com.ryanair.task.interconnectingflights.dto.AvailableSchedulesDto;
+import com.ryanair.task.interconnectingflights.dtos.AvailableRoutsDto;
+import com.ryanair.task.interconnectingflights.dtos.AvailableSchedulesDto;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;

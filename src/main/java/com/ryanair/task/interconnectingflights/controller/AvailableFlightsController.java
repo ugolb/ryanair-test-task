@@ -14,12 +14,11 @@ import java.util.List;
 public class AvailableFlightsController implements AvailableFlightsApi {
     @Override
     public ResponseEntity<List<FoundFlightsModel>> loginUser(
-            @RequestParam("departureAirport") String departureAirport,
-            @RequestParam("arrivalAirport") String arrivalAirport,
-            @RequestParam("departureDateTime") LocalDateTime departureDateTime,
-            @RequestParam("arrivalDateTime") LocalDateTime arrivalDateTime) {
+            @RequestParam("departure") String departure,
+            @RequestParam("arrival") String arrival,
+            @RequestParam("departureDateTime") String departureDateTime,
+            @RequestParam("arrivalDateTime") String arrivalDateTime) {
         return ResponseEntity.ok(getMock());
-
     }
 
     public List<FoundFlightsModel> getMock() {
