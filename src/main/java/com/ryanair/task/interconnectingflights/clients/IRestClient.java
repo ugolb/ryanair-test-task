@@ -24,5 +24,5 @@ public interface IRestClient {
      * @return list of AvailableSchedulesDto objects
      * @see AvailableSchedulesDto
      */
-    List<AvailableSchedulesDto> getAllSchedulesByFilter();
+    AvailableSchedulesDto getAllSchedulesByFilter(String scheduleServiceUrl);
 }

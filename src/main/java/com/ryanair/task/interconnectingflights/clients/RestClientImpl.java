@@ -11,6 +11,11 @@ import java.util.List;
 @Component
 public class RestClientImpl extends RestClientCommon implements IRestClient {
 
+    /**
+     * Method send GET request to Schedule service.
+     *
+     * @return list of AvailableRoutsDto.
+     */
     @Override
     public List<AvailableRoutsDto> getAllAvailableRouts() {
         return sendGetRequestForListOfObjects(
@@ -20,8 +25,17 @@ public class RestClientImpl extends RestClientCommon implements IRestClient {
         );
     }
 
+    /**
+     * Method sends GET request to Schedule service.
+     *
+     * @param scheduleServiceUrl - service url.
+     * @return AvailableSchedulesDto object.
+     */
     @Override
-    public List<AvailableSchedulesDto> getAllSchedulesByFilter() {
-        return null;
+    public AvailableSchedulesDto getAllSchedulesByFilter(String scheduleServiceUrl) {
+        return sendGetRequestForOneObject(
+                new ParameterizedTypeReference<AvailableSchedulesDto>() {
+                },
+                scheduleServiceUrl);
     }
 }

@@ -27,6 +27,6 @@ public class FlightsInfoDaoImpl implements FlightsInfoDao {
 
     @Override
     public AvailableSchedulesDto getFlightsSchedule(@NotNull FlightFilterModel filter) {
-        return null;
+        return restClient.getAllSchedulesByFilter(null);
     }
 }

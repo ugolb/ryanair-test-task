@@ -2,7 +2,7 @@ package com.ryanair.task.interconnectingflights.controller;
 
 import com.ryanair.task.interconnectingflights.models.FlightFilterModel;
 import com.ryanair.task.interconnectingflights.models.FoundFlightsModel;
-import com.ryanair.task.interconnectingflights.services.InterconnectingFlightsServiceImpl;
+import com.ryanair.task.interconnectingflights.services.InterconnectingFlightsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,10 +13,10 @@ import java.util.List;
 @RestController
 public class AvailableFlightsController implements AvailableFlightsApi {
 
-    private final InterconnectingFlightsServiceImpl flightsService;
+    private final InterconnectingFlightsService flightsService;
 
     @Autowired
-    public AvailableFlightsController(InterconnectingFlightsServiceImpl flightsService) {
+    public AvailableFlightsController(InterconnectingFlightsService flightsService) {
         this.flightsService = flightsService;
     }
 

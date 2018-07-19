@@ -12,9 +12,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class AvailableRoutsDto {
 
-    @NotNull
     private String airportFrom;
-    @NotNull
     private String airportTo;
     private String connectingAirport;
     private String operator;
