@@ -28,5 +28,4 @@ public class InterconnectingFlightsServiceTest {
         //Then
         Assertions.assertThat(actualResult).isEqualTo(expectedResult);
     }
-
 }

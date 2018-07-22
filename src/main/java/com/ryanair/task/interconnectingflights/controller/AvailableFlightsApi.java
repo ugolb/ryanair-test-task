@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * Interface which represents endpoints.
+ */
 public interface AvailableFlightsApi {
 
     @RequestMapping(value = "/interconnections", method = RequestMethod.GET, produces = "application/json")

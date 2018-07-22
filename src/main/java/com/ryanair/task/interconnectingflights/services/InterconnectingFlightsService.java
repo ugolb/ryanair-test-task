@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service which is responsible to provide controller list of found flight models based on received filter.
+ */
 @Service
 public class InterconnectingFlightsService implements FlightsService {
     private FlightScheduleAnalyzer flightScheduleAnalyzer;

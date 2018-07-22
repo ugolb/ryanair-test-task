@@ -19,6 +19,14 @@ import java.util.stream.Collectors;
 
 public class CommonAnalyzer {
 
+    /**
+     * Method build available flight rotes.
+     *
+     * @param airportFrom - departure airport IATA code.
+     * @param airportTo   - arrival airport IATA code.
+     * @param operator    - flight operator.
+     * @return AvailableRoutsDto object.
+     */
     protected AvailableRoutsDto buildAvailableRoutsDto(String airportFrom, String airportTo, String operator) {
         return AvailableRoutsDto.builder()
                 .airportFrom(airportFrom)
@@ -27,9 +35,16 @@ public class CommonAnalyzer {
                 .build();
     }
 
+    /**
+     * Method filters list of all available routes based on filter received from request.
+     *
+     * @param filter                - request filter.
+     * @param availableRoutsDtoList - list of dto's which should be filtered .
+     * @return List of appropriate routes.
+     */
     protected List<AvailableRoutsDto> getInitiallyFilteredRoutes(final FlightFilterModel filter,
-                                                                 List<AvailableRoutsDto> flightsInfoDao) {
-        return flightsInfoDao.stream()
+                                                                 List<AvailableRoutsDto> availableRoutsDtoList) {
+        return availableRoutsDtoList.stream()
                 .filter(route -> ApplicationUtils.departuresIsEqual(filter, route)
                         || ApplicationUtils.arrivalsIsEqual(filter, route))
                 .filter(route -> !StringUtils.isEmpty(route.getOperator())
@@ -37,11 +52,19 @@ public class CommonAnalyzer {
                 .collect(Collectors.toList());
     }
 
-    protected List<FlightPairDto> getFilteredRoutes(FlightFilterModel filter, List<AvailableRoutsDto> allAvailableRoutes) {
+    /**
+     * Method creates FlightPairDto object which will contain firstLeg and secondLeg in case if flight interconnected
+     * and returns firstLeg and secondLEg == null
+     *
+     * @param filter             - filter received from request.
+     * @param allAvailableRoutes - initially filtered available routes.
+     * @return list of FlightPairDto.
+     */
+    protected List<FlightPairDto> getFlightPairs(FlightFilterModel filter, List<AvailableRoutsDto> allAvailableRoutes) {
         final List<FlightPairDto> flightPairDtoList = new ArrayList<>();
         for (AvailableRoutsDto dto : getInitiallyFilteredRoutes(filter, allAvailableRoutes)) {
             if ((ApplicationUtils.departuresIsEqual(filter, dto) && ApplicationUtils.arrivalsIsEqual(filter, dto))) {
-                if (ApplicationUtils.isNullOrEmpty(dto.getConnectingAirport())) {
+                if (StringUtils.isEmpty(dto.getConnectingAirport())) {
                     ApplicationUtils.addToFlightPairList(flightPairDtoList, dto, null, filter);
                 } else {
                     AvailableRoutsDto firstLeg = buildAvailableRoutsDto(dto.getAirportFrom(),
@@ -53,7 +76,7 @@ public class CommonAnalyzer {
                 }
             } else if ((ApplicationUtils.departuresIsEqual(filter, dto)
                     && !ApplicationUtils.arrivalsIsEqual(filter, dto)
-                    && ApplicationUtils.isNullOrEmpty(dto.getConnectingAirport()))) {
+                    && StringUtils.isEmpty(dto.getConnectingAirport()))) {
                 ApplicationUtils.addToListIfPairExist(allAvailableRoutes, dto.getAirportTo(), filter, dto,
                         flightPairDtoList);
             }
@@ -61,6 +84,18 @@ public class CommonAnalyzer {
         return flightPairDtoList;
     }
 
+    /**
+     * Method analyze interconnected flights, look for appropriate pair combination based on:
+     * First departure dateTime must be more or equal then departure time from filter;
+     * Last arrival dateTime must be less or equal then arrival time in filter;
+     * Time difference between first arrival and second departure must be more or equal then two hours.
+     *
+     * @param availableScheduleFirstLeg  - available schedules for first flight.
+     * @param availableScheduleSecondLeg - available schedules for second flight.
+     * @param flightPairDto              - all available routes.
+     * @param filter                     - filter from request.
+     * @return list of FoundFlightsModel objects.
+     */
     protected List<FoundFlightsModel> getAnalyzedInterconnectedFlight(final AvailableSchedulesDto availableScheduleFirstLeg,
                                                                       final AvailableSchedulesDto availableScheduleSecondLeg,
                                                                       final FlightPairDto flightPairDto,
@@ -111,11 +146,29 @@ public class CommonAnalyzer {
 
     }
 
-    private boolean isProperDiffTime(FlightDetailsDto currentFlight, FlightDetailsDto secondLegSchedule) {
-        return ChronoUnit.HOURS.between(currentFlight.getArrivalTime(),
-                secondLegSchedule.getDepartureTime()) >= CommonConstants.DIFF_BETWEEN_FLIGHTS;
+
+    /**
+     * Returns true if time difference between two flights >= CommonConstants.DIFF_BETWEEN_FLIGHTS otherwise false.
+     *
+     * @param firstFlight  - first flight from interconnecting chain.
+     * @param secondFlight - second flight from interconnecting chain.
+     * @return true / false
+     */
+    private boolean isProperDiffTime(FlightDetailsDto firstFlight, FlightDetailsDto secondFlight) {
+        return ChronoUnit.HOURS.between(firstFlight.getArrivalTime(),
+                secondFlight.getDepartureTime()) >= CommonConstants.DIFF_BETWEEN_FLIGHTS;
     }
 
+    /**
+     * Method analyze direct flights, look for appropriate pair combination based on:
+     * Departure dateTime must be more or equal then departure time from filter;
+     * Arrival dateTime must be less or equal then arrival time in filter;
+     *
+     * @param schedulesDto  - available schedules for first flight.
+     * @param flightPairDto - all available routes.
+     * @param filter        - filter from request.
+     * @return list of FoundFlightsModel objects.
+     */
     protected List<FoundFlightsModel> getAnalyzedDirectFlight(final AvailableSchedulesDto schedulesDto,
                                                               final FlightPairDto flightPairDto,
                                                               final FlightFilterModel filter) {
@@ -140,7 +193,12 @@ public class CommonAnalyzer {
         return Collections.emptyList();
     }
 
-    protected boolean dtoHasTwoLegs(final FlightPairDto flightPairDto) {
+    /**
+     * Checks if current flight is direct or interconnected.
+     *
+     * @return true if flight is interconnected and false otherwise.
+     */
+    protected boolean isInterconnectingFlight(final FlightPairDto flightPairDto) {
         return Objects.nonNull(flightPairDto.getFirstLeg()) && Objects.nonNull(flightPairDto.getSecondLeg());
     }
 }

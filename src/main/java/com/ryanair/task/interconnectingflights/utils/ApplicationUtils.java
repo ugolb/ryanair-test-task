@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Common application utilities.
+ */
 public final class ApplicationUtils {
 
     /**
@@ -22,6 +25,14 @@ public final class ApplicationUtils {
     private ApplicationUtils() {
     }
 
+    /**
+     * Builds link for ScheduleService based on filter received in request.
+     *
+     * @param departure - departure airport.
+     * @param arrival   - arrival airport.
+     * @param filter    - filter received in request.
+     * @return String which is built URL.
+     */
     public static String buildScheduleServiceUrl(String departure, String arrival, final FlightFilterModel filter) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("departure", departure);
@@ -32,6 +43,13 @@ public final class ApplicationUtils {
         return UriComponentsBuilder.fromHttpUrl(RestClientConstants.SCHEDULES_API_LINK).build(parameters).toString();
     }
 
+    /**
+     * Method filters schedules list based on month day.
+     *
+     * @param schedulesDto - schedules which should be filtered.
+     * @param dateTime     - date and time based on which schedules will be filtered.
+     * @return list of FlightDetailsDto objects.
+     */
     public static List<FlightDetailsDto> getScheduleByDay(final AvailableSchedulesDto schedulesDto,
                                                           final LocalDateTime dateTime) {
         List<ScheduleDayDto> days = schedulesDto.getDays();
@@ -43,6 +61,11 @@ public final class ApplicationUtils {
         return Collections.emptyList();
     }
 
+    /**
+     * Method build flight leg.
+     *
+     * @return FlightLegModel object.
+     */
     public static FlightLegModel buildFlightLeg(final FlightFilterModel filter, final FlightDetailsDto flightDetailsDto) {
         LocalDateTime scheduleDepartureTime = LocalDateTime
                 .of(filter.getDepartureDateTime().toLocalDate(), flightDetailsDto.getDepartureTime());
@@ -57,11 +80,14 @@ public final class ApplicationUtils {
                 .build();
     }
 
+    /**
+     * Method adds dto to the list if pair exist.
+     */
     public static void addToListIfPairExist(List<AvailableRoutsDto> list, String departure, FlightFilterModel filter, AvailableRoutsDto firstLegDto, List<FlightPairDto> flightPairDtoList) {
         for (AvailableRoutsDto secondLegDto : list) {
-            if (ApplicationUtils.departuresIsEqual(secondLegDto.getAirportFrom(), departure)
-                    && ApplicationUtils.arrivalsIsEqual(secondLegDto.getAirportTo(), filter.getArrival())
-                    && ApplicationUtils.isNullOrEmpty(secondLegDto.getConnectingAirport())) {
+            if (secondLegDto.getAirportFrom().equals(departure)
+                    && secondLegDto.getAirportTo().equals(filter.getArrival())
+                    && StringUtils.isEmpty(secondLegDto.getConnectingAirport())) {
                 flightPairDtoList.add(
                         FlightPairDto.builder()
                                 .firstLeg(firstLegDto)
@@ -73,6 +99,9 @@ public final class ApplicationUtils {
         }
     }
 
+    /**
+     * Method add flight pair dto to the list.
+     */
     public static void addToFlightPairList(final List<FlightPairDto> flightPairDtoList, final AvailableRoutsDto firstLeg,
                                            final AvailableRoutsDto secondLeg, final FlightFilterModel filter) {
         flightPairDtoList.add(FlightPairDto.builder()
@@ -83,27 +112,31 @@ public final class ApplicationUtils {
                 .build());
     }
 
+    /**
+     * Return true if flight operator id Ryanair otherwise false.
+     *
+     * @param operatorName - value need to be checked.
+     * @return true / false
+     */
     public static boolean isRyanairOperator(String operatorName) {
         return operatorName.equalsIgnoreCase(CommonConstants.RYANAIR);
     }
 
-    public static boolean isNullOrEmpty(String valueToCheck) {
-        return StringUtils.isEmpty(valueToCheck);
-    }
-
+    /**
+     * Return true if passed dates are equal otherwise false.
+     *
+     * @return true / false
+     */
     public static boolean departuresIsEqual(FlightFilterModel filter, AvailableRoutsDto route) {
         return route.getAirportFrom().equals(filter.getDeparture());
     }
 
-    public static boolean departuresIsEqual(String dtoDeparture, String filterDeparture) {
-        return dtoDeparture.equals(filterDeparture);
-    }
-
+    /**
+     * Return true if passed dates are equal otherwise false.
+     *
+     * @return true / false
+     */
     public static boolean arrivalsIsEqual(FlightFilterModel filter, AvailableRoutsDto route) {
         return route.getAirportTo().equals(filter.getArrival());
-    }
-
-    public static boolean arrivalsIsEqual(String dtoDeparture, String filterDeparture) {
-        return dtoDeparture.equals(filterDeparture);
     }
 }

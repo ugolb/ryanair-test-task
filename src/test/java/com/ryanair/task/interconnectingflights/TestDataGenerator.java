@@ -17,23 +17,20 @@ import java.util.List;
 public final class TestDataGenerator {
     public static final String IATA_WRO = "WRO";
     public static final String IATA_DUB = "DUB";
-    public static final String IATA_WAW = "WAW";
-    public static final String IATA_ZAZ = "ZAZ";
-    public static final String IATA_ACE = "ACE";
-    public static final String IATA_LTN = "LTN";
-    public static final String TEST_TIME = "2016-03-01T07:00:00";
-    public static final String FIRST_LEG_DEP_DATETIME = "2018-07-22T10:19:00";
-    public static final String FIRST_LEG_ARR_DATETIME = "2018-07-22T18:20:00";
-    public static final String SECOND_LEG_DEP_DATETIME = "2018-07-23T07:00:00";
-    public static final String SECOND_LEG_ARR_DATETIME = "2018-07-23T07:00:00";
+    private static final String IATA_WAW = "WAW";
+    private static final String IATA_ZAZ = "ZAZ";
+    private static final String IATA_ACE = "ACE";
+    private static final String IATA_LTN = "LTN";
+    private static final String TEST_TIME = "2016-03-01T07:00:00";
+    private static final String FIRST_LEG_DEP_DATETIME = "2018-07-22T10:19:00";
+    private static final String FIRST_LEG_ARR_DATETIME = "2018-07-22T18:20:00";
 
-    public static final LocalTime DEPARTURE_TIME_IN_RANGE = LocalTime.of(10, 20);
-    public static final LocalTime ARRIVAL_TIME_IN_RANGE = LocalTime.of(11, 20);
-    public static final LocalTime DEPARTURE_TIME_OUT_OF_RANGE = LocalTime.of(9, 20);
-    public static final LocalTime ARRIVAL_TIME_IN_OUT_OF_RANGE = LocalTime.of(12, 20);
-    public static final LocalDate DATE_IN_RANGE = LocalDate.of(2018, 7, 22);
-    public static final LocalDate DATE_IN_OUT_OF_RAMGE = LocalDate.of(2018, 7, 24);
-    public static final String NOT_RYANAIR = "NOT_RYANAIR";
+    private static final LocalTime DEPARTURE_TIME_IN_RANGE = LocalTime.of(10, 20);
+    private static final LocalTime ARRIVAL_TIME_IN_RANGE = LocalTime.of(11, 20);
+    private static final LocalTime DEPARTURE_TIME_OUT_OF_RANGE = LocalTime.of(9, 20);
+    private static final LocalTime ARRIVAL_TIME_IN_OUT_OF_RANGE = LocalTime.of(12, 20);
+    private static final LocalDate DATE_IN_RANGE = LocalDate.of(2018, 7, 22);
+    private static final String NOT_RYANAIR = "NOT_RYANAIR";
 
 
     public static List<AvailableRoutsDto> getListOfAvailableRoutsDto() {
@@ -123,15 +120,6 @@ public final class TestDataGenerator {
                 .build();
     }
 
-    public static List<FoundFlightsModel> getListOfFoundFlightsDirectOnly() {
-        return Collections.singletonList(
-                FoundFlightsModel.builder()
-                        .stops(CommonConstants.WITHOUT_STOPS)
-                        .legs(Collections.singletonList(getFlightLegsModel()))
-                        .build()
-        );
-    }
-
     public static AvailableSchedulesDto getAvailableSchedulesDtoFl() {
         return AvailableSchedulesDto.builder()
                 .month(7)
@@ -139,7 +127,7 @@ public final class TestDataGenerator {
                 .build();
     }
 
-    public static List<ScheduleDayDto> getDaysFl() {
+    private static List<ScheduleDayDto> getDaysFl() {
         return Arrays.asList(
                 ScheduleDayDto.builder()
                         .day(21)
@@ -152,7 +140,7 @@ public final class TestDataGenerator {
         );
     }
 
-    public static List<FlightDetailsDto> getListOfFlightDetailsFl() {
+    private static List<FlightDetailsDto> getListOfFlightDetailsFl() {
         return Arrays.asList(
                 FlightDetailsDto.builder()
                         .departureTime(DEPARTURE_TIME_IN_RANGE)
@@ -172,7 +160,7 @@ public final class TestDataGenerator {
                 .build();
     }
 
-    public static List<ScheduleDayDto> getDaysSl() {
+    private static List<ScheduleDayDto> getDaysSl() {
         return Arrays.asList(
                 ScheduleDayDto.builder()
                         .day(21)
@@ -185,7 +173,7 @@ public final class TestDataGenerator {
         );
     }
 
-    public static List<FlightDetailsDto> getListOfFlightDetailsSl() {
+    private static List<FlightDetailsDto> getListOfFlightDetailsSl() {
         return Arrays.asList(
                 FlightDetailsDto.builder()
                         .departureTime(DEPARTURE_TIME_IN_RANGE.plusHours(4))
@@ -194,27 +182,6 @@ public final class TestDataGenerator {
                 FlightDetailsDto.builder()
                         .departureTime(DEPARTURE_TIME_OUT_OF_RANGE)
                         .arrivalTime(ARRIVAL_TIME_IN_OUT_OF_RANGE)
-                        .build()
-        );
-    }
-
-
-    public static List<AvailableRoutsDto> getOnlyDirectFlights() {
-        return Arrays.asList(
-                AvailableRoutsDto.builder()
-                        .airportFrom(IATA_DUB)
-                        .airportTo(IATA_ZAZ)
-                        .operator(CommonConstants.RYANAIR)
-                        .build(),
-                AvailableRoutsDto.builder()
-                        .airportFrom(IATA_DUB)
-                        .airportTo(IATA_WRO)
-                        .operator(CommonConstants.RYANAIR)
-                        .build(),
-                AvailableRoutsDto.builder()
-                        .airportFrom(IATA_DUB)
-                        .airportTo(IATA_WRO)
-                        .operator(NOT_RYANAIR)
                         .build()
         );
     }

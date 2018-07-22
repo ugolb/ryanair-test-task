@@ -7,6 +7,9 @@ import com.ryanair.task.interconnectingflights.services.dtos.AvailableSchedulesD
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * Dao which provides methods to call external services.
+ */
 public interface FlightsInfoDao {
 
     /**

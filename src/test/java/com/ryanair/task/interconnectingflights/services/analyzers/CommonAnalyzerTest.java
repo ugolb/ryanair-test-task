@@ -20,7 +20,7 @@ public class CommonAnalyzerTest {
         List<FlightPairDto> expectedResult = TestDataGenerator.getExpectedFlightPairDto();
 
         //When
-        List<FlightPairDto> actualResult = commonAnalyzer.getFilteredRoutes(
+        List<FlightPairDto> actualResult = commonAnalyzer.getFlightPairs(
                 TestDataGenerator.getDubWroFlightFilter(), TestDataGenerator.getListOfAvailableRoutsDto());
 
         //Then
@@ -33,7 +33,7 @@ public class CommonAnalyzerTest {
         List<FlightPairDto> expectedResult = Collections.emptyList();
 
         //When
-        List<FlightPairDto> actualResult = commonAnalyzer.getFilteredRoutes(
+        List<FlightPairDto> actualResult = commonAnalyzer.getFlightPairs(
                 TestDataGenerator.getNotExistingRouteFlightFilter(), TestDataGenerator.getListOfAvailableRoutsDto());
 
         //Then

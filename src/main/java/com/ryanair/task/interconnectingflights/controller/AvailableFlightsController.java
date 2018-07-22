@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controller contains endpoint implementation.
+ */
 @RestController
 public class AvailableFlightsController implements AvailableFlightsApi {
 
@@ -20,6 +23,11 @@ public class AvailableFlightsController implements AvailableFlightsApi {
         this.flightsService = flightsService;
     }
 
+    /**
+     * Method returns to client response entity with body contains result of service execution.
+     * @param flightFilterModel - filter received in request from client.
+     * @return ResponseEntity.
+     */
     @Override
     public ResponseEntity<List<FoundFlightsModel>> getAllAvailableFlightSchedules(@ModelAttribute final FlightFilterModel flightFilterModel) {
         return ResponseEntity.ok(flightsService.getAppropriateFlights(flightFilterModel));
