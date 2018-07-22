@@ -15,5 +15,5 @@ public interface Analyzer {
      *
      * @return FoundFlightsModel object.
      */
-    List<FoundFlightsModel> analyze(final FlightFilterModel flightFilterModel);
+    List<FoundFlightsModel> analyzeAndGetFinalListOfFlights(final FlightFilterModel flightFilterModel);
 }

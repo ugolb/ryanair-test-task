@@ -14,5 +14,5 @@ public interface AvailableFlightsApi {
 
     @RequestMapping(value = "/interconnections", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    ResponseEntity<List<FoundFlightsModel>> loginUser(@ModelAttribute FlightFilterModel flightFilterModel);
+    ResponseEntity<List<FoundFlightsModel>> getAllAvailableFlightSchedules(@ModelAttribute FlightFilterModel flightFilterModel);
 }

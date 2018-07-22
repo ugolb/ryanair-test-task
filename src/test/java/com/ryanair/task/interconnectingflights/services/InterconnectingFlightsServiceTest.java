@@ -1,39 +1,32 @@
 package com.ryanair.task.interconnectingflights.services;
 
+
 import com.ryanair.task.interconnectingflights.TestDataGenerator;
+import com.ryanair.task.interconnectingflights.models.FlightFilterModel;
 import com.ryanair.task.interconnectingflights.models.FoundFlightsModel;
 import com.ryanair.task.interconnectingflights.services.analyzers.FlightScheduleAnalyzer;
-import com.ryanair.task.interconnectingflights.services.dao.FlightsInfoDaoImpl;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class InterconnectingFlightsServiceTest {
-
-    private FlightsInfoDaoImpl daoMock = Mockito.mock(FlightsInfoDaoImpl.class);
-    private FlightScheduleAnalyzer analyzerMock = Mockito.mock(FlightScheduleAnalyzer.class);
-
-    private InterconnectingFlightsService service = new InterconnectingFlightsService(analyzerMock, daoMock);
-
+    private FlightScheduleAnalyzer analyzer = Mockito.mock(FlightScheduleAnalyzer.class);
+    private final InterconnectingFlightsService service = new InterconnectingFlightsService(analyzer);
 
     @Test
-    public void test() {
+    public void shouldReturnListFlightModels() {
         //Given
-        Mockito.when(daoMock.getAllAvailableRoutes()).thenReturn(TestDataGenerator.getListOfAvailableRoutsDto());
-        List<FoundFlightsModel> appropriateFlights = service.getAppropriateFlights(TestDataGenerator.getWroBubFlightFilter());
+        final FlightFilterModel filter = TestDataGenerator.getDubWroFlightFilter();
+        List<FoundFlightsModel> expectedResult = TestDataGenerator.getListOfFoundFlights();
+        Mockito.when(analyzer.analyzeAndGetFinalListOfFlights(filter)).thenReturn(expectedResult);
 
         //When
-
+        List<FoundFlightsModel> actualResult = service.getAppropriateFlights(filter);
 
         //Then
-
-
+        Assertions.assertThat(actualResult).isEqualTo(expectedResult);
     }
 
 }

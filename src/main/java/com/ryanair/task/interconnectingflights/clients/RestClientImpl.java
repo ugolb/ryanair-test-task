@@ -43,7 +43,7 @@ public class RestClientImpl extends RestClientCommon implements IRestClient {
                     },
                     scheduleServiceUrl);
         } catch (HttpClientErrorException exception) {
-            log.error("Failed to get value from \"Flight Schedule\" servie");
+            log.error("Failed to get value from \"Flight Schedule\" service");
             return null;
         }
     }

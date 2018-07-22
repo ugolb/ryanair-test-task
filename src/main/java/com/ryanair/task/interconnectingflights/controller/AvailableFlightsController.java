@@ -21,7 +21,7 @@ public class AvailableFlightsController implements AvailableFlightsApi {
     }
 
     @Override
-    public ResponseEntity<List<FoundFlightsModel>> loginUser(@ModelAttribute final FlightFilterModel flightFilterModel) {
+    public ResponseEntity<List<FoundFlightsModel>> getAllAvailableFlightSchedules(@ModelAttribute final FlightFilterModel flightFilterModel) {
         return ResponseEntity.ok(flightsService.getAppropriateFlights(flightFilterModel));
     }
 }

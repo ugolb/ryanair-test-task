@@ -3,8 +3,6 @@ package com.ryanair.task.interconnectingflights.services.dtos;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * AvailableRoutsDto representation of one one particular flight route.
  */

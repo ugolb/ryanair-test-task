@@ -5,7 +5,6 @@ import com.ryanair.task.interconnectingflights.services.dtos.AvailableRoutsDto;
 import com.ryanair.task.interconnectingflights.services.dtos.AvailableSchedulesDto;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -15,15 +14,10 @@ public class RestClientCommonTest {
     private static final String TEST_URL = "https://api.ryanair.com/timetable/3/schedules/DUB/WRO/years/2018/months/7";
     private static final String TEST_URL_WITHOUT_ALLOWED_SCHEDULE = "https://api.ryanair.com/timetable/3/schedules" +
             "/DUB/WRO/years/1900/months/7";
-
-    final RestClientCommon mockRestClientCommon = Mockito.mock(RestClientCommon.class);
+    private final RestClientCommon restClientCommon = new RestClientCommon();
 
     @Test
     public void shouldSuccessfullyReturnNotEmptyList() {
-        //Given
-        RestClientCommon restClientCommon = new RestClientCommon();
-
-
         //When
         List<AvailableRoutsDto> actualResult = restClientCommon.sendGetRequestForListOfObjects(
                 new ParameterizedTypeReference<List<AvailableRoutsDto>>() {
@@ -35,9 +29,6 @@ public class RestClientCommonTest {
 
     @Test
     public void shouldSuccessfullyReturnAvailableSchedules() {
-        //Given
-        RestClientCommon restClientCommon = new RestClientCommon();
-
         //When
         AvailableSchedulesDto actualResult = restClientCommon.sendGetRequestForOneObject(
                 new ParameterizedTypeReference<AvailableSchedulesDto>() {
@@ -50,9 +41,6 @@ public class RestClientCommonTest {
 
     @Test(expected = HttpClientErrorException.class)
     public void shouldThrowExceptionIfScheduleDoesNotExist() {
-        //Given
-        RestClientCommon restClientCommon = new RestClientCommon();
-
         //When
         AvailableSchedulesDto actualResult = restClientCommon.sendGetRequestForOneObject(
                 new ParameterizedTypeReference<AvailableSchedulesDto>() {

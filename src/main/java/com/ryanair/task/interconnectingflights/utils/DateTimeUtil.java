@@ -1,5 +1,6 @@
 package com.ryanair.task.interconnectingflights.utils;
 
+import com.ryanair.task.interconnectingflights.models.FlightFilterModel;
 import com.ryanair.task.interconnectingflights.services.dtos.FlightDetailsDto;
 import com.ryanair.task.interconnectingflights.services.dtos.FlightPairDto;
 
@@ -73,6 +74,14 @@ public final class DateTimeUtil {
 
         return isGreaterOrEqual(valueToCompare.getDepartureTime(), departureTime)
                 && isLessOrEqual(valueToCompare.getArrivalTime(), arrivalTime);
+    }
+
+    public static boolean isInRange(FlightFilterModel filter, FlightDetailsDto currentFlight,
+                                    FlightDetailsDto secondLegSchedule) {
+        return DateTimeUtil.isGreaterOrEqual(
+                currentFlight.getDepartureTime(), filter.getDepartureDateTime().toLocalTime())
+                && DateTimeUtil.isLessOrEqual(
+                secondLegSchedule.getArrivalTime(), filter.getArrivalDateTime().toLocalTime());
     }
 
     public static boolean isGreaterOrEqual(LocalTime valueToCompare, LocalTime compareToValue) {
