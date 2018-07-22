@@ -1,9 +1,9 @@
 package com.ryanair.task.interconnectingflights.models;
 
 import com.ryanair.task.interconnectingflights.utils.DateTimeUtil;
+import com.ryanair.task.interconnectingflights.utils.Validator;
 import lombok.Getter;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -11,23 +11,18 @@ import java.time.LocalDateTime;
  */
 @Getter
 public class FlightFilterModel {
+    Validator validator = new Validator();
 
-    @NotNull
     private String departure;
-    @NotNull
     private String arrival;
-    @NotNull
     private LocalDateTime departureDateTime;
-    @NotNull
     private LocalDateTime arrivalDateTime;
 
-    public FlightFilterModel(@NotNull String departure,
-                             @NotNull String arrival,
-                             @NotNull String departureDateTime,
-                             @NotNull String arrivalDateTime) {
-        this.departure = departure;
-        this.arrival = arrival;
-        this.departureDateTime = DateTimeUtil.convertStringToLocalDateTime(departureDateTime);
-        this.arrivalDateTime = DateTimeUtil.convertStringToLocalDateTime(arrivalDateTime);
+    public FlightFilterModel(String departure, String arrival, String departureDateTime, String arrivalDateTime) {
+
+        this.departure = validator.checkIfNullOrEmpty(departure);
+        this.arrival = validator.checkIfNullOrEmpty(arrival);
+        this.departureDateTime = DateTimeUtil.convertStringToLocalDateTime(validator.checkIfNullOrEmpty(departureDateTime));
+        this.arrivalDateTime = DateTimeUtil.convertStringToLocalDateTime(validator.checkIfNullOrEmpty(arrivalDateTime));
     }
 }
