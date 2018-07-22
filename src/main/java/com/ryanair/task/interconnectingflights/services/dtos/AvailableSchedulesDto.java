@@ -10,5 +10,5 @@ import java.util.List;
 @Builder
 public class AvailableSchedulesDto implements Serializable {
     private Integer month;
-    private List<ScheduleDaysDto> days;
+    private List<ScheduleDayDto> days;
 }

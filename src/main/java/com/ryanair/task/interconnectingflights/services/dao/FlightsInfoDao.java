@@ -21,5 +21,5 @@ public interface FlightsInfoDao {
      *
      * @return AvailableSchedulesDto object.
      */
-    AvailableSchedulesDto getFlightsSchedule(@NotNull FlightFilterModel filter);
+    AvailableSchedulesDto getFlightsSchedule(@NotNull FlightFilterModel filter, String departure, String arrival);
 }

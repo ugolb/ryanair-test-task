@@ -4,6 +4,7 @@ import com.ryanair.task.interconnectingflights.clients.RestClientImpl;
 import com.ryanair.task.interconnectingflights.models.FlightFilterModel;
 import com.ryanair.task.interconnectingflights.services.dtos.AvailableRoutsDto;
 import com.ryanair.task.interconnectingflights.services.dtos.AvailableSchedulesDto;
+import com.ryanair.task.interconnectingflights.utils.ApplicationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,7 @@ public class FlightsInfoDaoImpl implements FlightsInfoDao {
     }
 
     @Override
-    public AvailableSchedulesDto getFlightsSchedule(@NotNull FlightFilterModel filter) {
-        return restClient.getAllSchedulesByFilter(null);
+    public AvailableSchedulesDto getFlightsSchedule(@NotNull FlightFilterModel filter, String departure, String arrival) {
+        return restClient.getAllSchedulesByFilter(ApplicationUtils.buildScheduleServiceUrl(departure, arrival, filter));
     }
 }

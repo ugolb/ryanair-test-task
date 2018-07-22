@@ -1,7 +1,11 @@
 package com.ryanair.task.interconnectingflights.clients;
 
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -18,7 +22,8 @@ public class RestClientCommon {
     protected <T> List<T> sendGetRequestForListOfObjects(
             final ParameterizedTypeReference<List<T>> parameterizedTypeReference, String serviceUrl) {
 
-        return new RestTemplate().exchange(
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.exchange(
                 serviceUrl,
                 HttpMethod.GET,
                 null,

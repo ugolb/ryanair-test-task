@@ -3,7 +3,9 @@ package com.ryanair.task.interconnectingflights.utils;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateTimeUtilTest {

@@ -3,11 +3,14 @@ package com.ryanair.task.interconnectingflights.clients;
 import com.ryanair.task.interconnectingflights.constants.RestClientConstants;
 import com.ryanair.task.interconnectingflights.services.dtos.AvailableRoutsDto;
 import com.ryanair.task.interconnectingflights.services.dtos.AvailableSchedulesDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
+@Slf4j
 @Component
 public class RestClientImpl extends RestClientCommon implements IRestClient {
 
@@ -33,9 +36,15 @@ public class RestClientImpl extends RestClientCommon implements IRestClient {
      */
     @Override
     public AvailableSchedulesDto getAllSchedulesByFilter(String scheduleServiceUrl) {
-        return sendGetRequestForOneObject(
-                new ParameterizedTypeReference<AvailableSchedulesDto>() {
-                },
-                scheduleServiceUrl);
+
+        try {
+            return sendGetRequestForOneObject(
+                    new ParameterizedTypeReference<AvailableSchedulesDto>() {
+                    },
+                    scheduleServiceUrl);
+        } catch (HttpClientErrorException exception) {
+            log.error("Failed to get value from \"Flight Schedule\" servie");
+            return null;
+        }
     }
 }

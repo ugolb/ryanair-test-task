@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class ScheduleDaysDto implements Serializable {
+public class ScheduleDayDto implements Serializable {
     private int day;
     private List<FlightDetailsDto> flights;
 }

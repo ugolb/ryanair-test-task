@@ -11,9 +11,9 @@ import org.springframework.web.client.RestClientException;
 @ControllerAdvice
 public class InterconnectionFlightsExceptionHandler {
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+/*    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(RestClientException.class)
     public void handleConflict() {
         log.error("Failed to reach external service.");
-    }
+    }*/
 }

@@ -1,6 +1,7 @@
 package com.ryanair.task.interconnectingflights.services;
 
 import com.ryanair.task.interconnectingflights.TestDataGenerator;
+import com.ryanair.task.interconnectingflights.models.FoundFlightsModel;
 import com.ryanair.task.interconnectingflights.services.analyzers.FlightScheduleAnalyzer;
 import com.ryanair.task.interconnectingflights.services.dao.FlightsInfoDaoImpl;
 import org.junit.Test;
@@ -8,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,7 +26,7 @@ public class InterconnectingFlightsServiceTest {
     public void test() {
         //Given
         Mockito.when(daoMock.getAllAvailableRoutes()).thenReturn(TestDataGenerator.getListOfAvailableRoutsDto());
-        service.getAppropriateFlights(TestDataGenerator.getWroBubFlightFilter());
+        List<FoundFlightsModel> appropriateFlights = service.getAppropriateFlights(TestDataGenerator.getWroBubFlightFilter());
 
         //When
 
