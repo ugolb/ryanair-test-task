@@ -1,6 +1,6 @@
 package com.ryanair.task.interconnectingflights.controller;
 
-import com.ryanair.task.interconnectingflights.TestDataGenerator;
+import com.ryanair.task.interconnectingflights.TestDataProvider;
 import com.ryanair.task.interconnectingflights.models.FlightFilterModel;
 import com.ryanair.task.interconnectingflights.models.FoundFlightsModel;
 import com.ryanair.task.interconnectingflights.services.InterconnectingFlightsService;
@@ -26,8 +26,8 @@ public class AvailableFlightsControllerTest {
     @Test
     public void shouldReturnExpectedList() {
         //Given
-        final FlightFilterModel filter = TestDataGenerator.getWroDubFlightFilter();
-        final List<FoundFlightsModel> expectedResult = TestDataGenerator.getListOfFoundFlights();
+        final FlightFilterModel filter = TestDataProvider.getWroDubFlightFilter();
+        final List<FoundFlightsModel> expectedResult = TestDataProvider.getListOfFoundFlights();
 
         //When
         Mockito.when(mockService.getAppropriateFlights(filter))
@@ -43,8 +43,8 @@ public class AvailableFlightsControllerTest {
     @Test
     public void shouldReturnSuccessStatusCode() {
         //Given
-        final FlightFilterModel filter = TestDataGenerator.getWroDubFlightFilter();
-        final List<FoundFlightsModel> expectedResult = TestDataGenerator.getListOfFoundFlights();
+        final FlightFilterModel filter = TestDataProvider.getWroDubFlightFilter();
+        final List<FoundFlightsModel> expectedResult = TestDataProvider.getListOfFoundFlights();
 
         //When
         Mockito.when(mockService.getAppropriateFlights(filter))
@@ -61,7 +61,7 @@ public class AvailableFlightsControllerTest {
     public void shouldReturnInternalServerErrorStatusCode() {
         //Given
         final AvailableFlightsController mockController = Mockito.mock(AvailableFlightsController.class);
-        final FlightFilterModel filter = TestDataGenerator.getWroDubFlightFilter();
+        final FlightFilterModel filter = TestDataProvider.getWroDubFlightFilter();
 
         //When
         Mockito.when(mockController.getAllAvailableFlightSchedules(filter)).thenThrow(RestClientException.class);

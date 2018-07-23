@@ -1,6 +1,6 @@
 package com.ryanair.task.interconnectingflights.utils;
 
-import com.ryanair.task.interconnectingflights.TestDataGenerator;
+import com.ryanair.task.interconnectingflights.TestDataProvider;
 import com.ryanair.task.interconnectingflights.models.FlightFilterModel;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class ApplicationUtilsTest {
     public void shouldConstructProperUrl() {
         //When
         final String actualResult = ApplicationUtils
-                .buildScheduleServiceUrl(TestDataGenerator.IATA_WRO, TestDataGenerator.IATA_DUB, filterModel);
+                .buildScheduleServiceUrl(TestDataProvider.IATA_WRO, TestDataProvider.IATA_DUB, filterModel);
 
         //Then
         Assertions.assertThat(actualResult).isEqualTo(TEST_URL);

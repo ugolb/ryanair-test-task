@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public final class TestDataGenerator {
+public final class TestDataProvider {
     public static final String IATA_WRO = "WRO";
     public static final String IATA_DUB = "DUB";
     private static final String IATA_WAW = "WAW";
@@ -203,6 +203,6 @@ public final class TestDataGenerator {
                 .build();
     }
 
-    private TestDataGenerator() {
+    private TestDataProvider() {
     }
 }

@@ -1,6 +1,6 @@
 package com.ryanair.task.interconnectingflights.services.analyzers;
 
-import com.ryanair.task.interconnectingflights.TestDataGenerator;
+import com.ryanair.task.interconnectingflights.TestDataProvider;
 import com.ryanair.task.interconnectingflights.constants.CommonConstants;
 import com.ryanair.task.interconnectingflights.models.FoundFlightsModel;
 import com.ryanair.task.interconnectingflights.services.dtos.FlightPairDto;
@@ -17,11 +17,11 @@ public class CommonAnalyzerTest {
     @Test
     public void shouldProperlyFilterAllRoutes() {
         //Given
-        List<FlightPairDto> expectedResult = TestDataGenerator.getExpectedFlightPairDto();
+        List<FlightPairDto> expectedResult = TestDataProvider.getExpectedFlightPairDto();
 
         //When
         List<FlightPairDto> actualResult = commonAnalyzer.getFlightPairs(
-                TestDataGenerator.getDubWroFlightFilter(), TestDataGenerator.getListOfAvailableRoutsDto());
+                TestDataProvider.getDubWroFlightFilter(), TestDataProvider.getListOfAvailableRoutsDto());
 
         //Then
         Assertions.assertThat(actualResult).isEqualTo(expectedResult);
@@ -34,7 +34,7 @@ public class CommonAnalyzerTest {
 
         //When
         List<FlightPairDto> actualResult = commonAnalyzer.getFlightPairs(
-                TestDataGenerator.getNotExistingRouteFlightFilter(), TestDataGenerator.getListOfAvailableRoutsDto());
+                TestDataProvider.getNotExistingRouteFlightFilter(), TestDataProvider.getListOfAvailableRoutsDto());
 
         //Then
         Assertions.assertThat(actualResult).isEqualTo(expectedResult);
@@ -44,14 +44,14 @@ public class CommonAnalyzerTest {
     public void shouldProperlyFilterDirectFlights() {
         //Given
         final FoundFlightsModel expectedResult = FoundFlightsModel.builder()
-                .legs(Collections.singletonList(TestDataGenerator.getFlightLegsModel()))
+                .legs(Collections.singletonList(TestDataProvider.getFlightLegsModel()))
                 .stops(CommonConstants.WITHOUT_STOPS)
                 .build();
 
         //When
         final List<FoundFlightsModel> actualResult = commonAnalyzer.getAnalyzedDirectFlight(
-                TestDataGenerator.getAvailableSchedulesDtoFl(), TestDataGenerator.getDirectRout(),
-                TestDataGenerator.getDubWroFlightFilter());
+                TestDataProvider.getAvailableSchedulesDtoFl(), TestDataProvider.getDirectRout(),
+                TestDataProvider.getDubWroFlightFilter());
 
         //Then
         Assertions.assertThat(actualResult.get(0)).isEqualTo(expectedResult);
@@ -61,14 +61,14 @@ public class CommonAnalyzerTest {
     public void shouldProperlyFilterFlightsWithConnectionAirport() {
         //Given
         final FoundFlightsModel expectedResult = FoundFlightsModel.builder()
-                .legs(Arrays.asList(TestDataGenerator.getDubWawModel(), TestDataGenerator.getWawDubModel()))
+                .legs(Arrays.asList(TestDataProvider.getDubWawModel(), TestDataProvider.getWawDubModel()))
                 .stops(CommonConstants.ONE_STOP)
                 .build();
 
         //When
         final List<FoundFlightsModel> actualResult = commonAnalyzer.getAnalyzedInterconnectedFlight(
-                TestDataGenerator.getAvailableSchedulesDtoFl(), TestDataGenerator.getAvailableSchedulesDtoSl(),
-                TestDataGenerator.getRoutesWithConnectionAirport(), TestDataGenerator.getDubWroFlightFilter());
+                TestDataProvider.getAvailableSchedulesDtoFl(), TestDataProvider.getAvailableSchedulesDtoSl(),
+                TestDataProvider.getRoutesWithConnectionAirport(), TestDataProvider.getDubWroFlightFilter());
 
         //Then
         Assertions.assertThat(actualResult.get(0)).isEqualTo(expectedResult);

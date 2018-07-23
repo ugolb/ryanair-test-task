@@ -1,7 +1,7 @@
 package com.ryanair.task.interconnectingflights.services;
 
 
-import com.ryanair.task.interconnectingflights.TestDataGenerator;
+import com.ryanair.task.interconnectingflights.TestDataProvider;
 import com.ryanair.task.interconnectingflights.models.FlightFilterModel;
 import com.ryanair.task.interconnectingflights.models.FoundFlightsModel;
 import com.ryanair.task.interconnectingflights.services.analyzers.FlightScheduleAnalyzer;
@@ -18,8 +18,8 @@ public class InterconnectingFlightsServiceTest {
     @Test
     public void shouldReturnListFlightModels() {
         //Given
-        final FlightFilterModel filter = TestDataGenerator.getDubWroFlightFilter();
-        List<FoundFlightsModel> expectedResult = TestDataGenerator.getListOfFoundFlights();
+        final FlightFilterModel filter = TestDataProvider.getDubWroFlightFilter();
+        List<FoundFlightsModel> expectedResult = TestDataProvider.getListOfFoundFlights();
         Mockito.when(analyzer.analyzeAndGetFinalListOfFlights(filter)).thenReturn(expectedResult);
 
         //When
